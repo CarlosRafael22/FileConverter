@@ -10,6 +10,11 @@ export const BackgroundStyle = styled.div`
   background: #ffffff;
   box-shadow: 0px 30px 60px rgba(86, 117, 152, 0.2);
   border-radius: 32px;
+
+  @media (max-width: 500px) {
+    width: 100%;
+    left: 0;
+  }
 `
 
 export const DropArea = styled.div`
@@ -21,4 +26,9 @@ export const DropArea = styled.div`
 
   border: 2px dashed #d6dee7;
   border-radius: 8px;
+
+  @media (max-width: 500px) {
+    left: 0;
+    width: 100%;
+  }
 `

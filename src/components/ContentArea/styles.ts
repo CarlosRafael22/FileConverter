@@ -11,10 +11,8 @@ export const ContentAreaStyle = styled.div`
 
 export const ArtWork = styled.div`
   position: absolute;
-  left: 46.5%;
-  right: 46.5%;
-  top: 40.33%;
-  bottom: 50.33%;
+  left: calc(50% - 80px / 2);
+  bottom: 40.33%;
   background-color: blue;
 `
 
@@ -36,6 +34,12 @@ export const TitleStyle = styled.h3`
   letter-spacing: 0.003em;
 
   color: #334e6c;
+
+  @media (max-width: 500px) {
+    width: 95%;
+    height: max-content;
+    left: 0;
+  }
 `
 
 export const SupportText = styled.p`
@@ -56,4 +60,8 @@ export const SupportText = styled.p`
   letter-spacing: 0.003em;
 
   color: rgba(51, 78, 108, 0.4);
+
+  @media (max-width: 500px) {
+    top: calc(50% - 16px / 2 + 80px);
+  }
 `
