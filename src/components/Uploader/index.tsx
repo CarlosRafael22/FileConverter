@@ -1,9 +1,12 @@
 import { BackgroundStyle, DropArea } from './styles'
+import ContentArea from '../ContentArea'
 
 const Uploader = () => {
   return (
     <BackgroundStyle>
-      <DropArea />
+      <DropArea>
+        <ContentArea />
+      </DropArea>
     </BackgroundStyle>
   )
 }
