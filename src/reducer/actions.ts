@@ -1,0 +1,6 @@
+export const UPLOAD_FILE = 'upload_file'
+export const HAS_UPLOADED_FILE = 'has_uploaded_file'
+export const CHOOSE_FORMAT = 'choose_format'
+export const CONVERT_FILE = 'convert_file'
+export const HAS_CONVERTED_FILE = 'has_converted_file'
+export const ALLOW_DOWNLOAD_REQUEST = 'allow_download_request'
