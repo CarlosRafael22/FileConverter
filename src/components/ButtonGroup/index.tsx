@@ -3,13 +3,14 @@ import { ButtonGroupStyle } from './styles'
 
 type ButtonGroupProps = {
   options: Array<string>
+  onButtonPress: Function
 }
 
-const ButtonGroup = ({ options }: ButtonGroupProps) => {
+const ButtonGroup = ({ options, onButtonPress }: ButtonGroupProps) => {
   return (
     <ButtonGroupStyle>
-      {options.map((option) => (
-        <Button text={option} />
+      {options.map((option, index) => (
+        <Button text={option} key={`button_${index}`} onPress={onButtonPress} />
       ))}
     </ButtonGroupStyle>
   )
