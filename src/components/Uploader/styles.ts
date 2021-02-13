@@ -32,3 +32,11 @@ export const DropArea = styled.div`
     width: 100%;
   }
 `
+
+export const ActionArea = styled.div`
+  position: absolute;
+  width: 464px;
+  height: 56px;
+  left: 29px;
+  bottom: 28px;
+`
