@@ -1,7 +1,10 @@
 import styled from 'styled-components'
+import { ButtonProps } from '.'
 
-export const ButtonStyle = styled.button`
-  width: 148px;
+type ButtonStyleProps = Pick<ButtonProps, 'fullWidth'>
+
+export const ButtonStyle = styled.button<ButtonStyleProps>`
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : '148px')};
   height: 56px;
 
   border: 2px solid #d6dee6;
