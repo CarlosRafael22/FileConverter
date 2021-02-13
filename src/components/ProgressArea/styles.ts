@@ -1,19 +1,19 @@
 import styled, { css } from 'styled-components'
-import { ActionAreaProps } from '.'
+import { ProgressAreaProps } from '.'
 
-type ActionAreaStyleProps = Pick<
-  ActionAreaProps,
+type ProgressAreaStyleProps = Pick<
+  ProgressAreaProps,
   'asContainer' | 'hasFinishedProgress'
 >
 
-type InfoTextProps = Pick<ActionAreaProps, 'hasFinishedProgress'>
+type InfoTextProps = Pick<ProgressAreaProps, 'hasFinishedProgress'>
 
-export const ActionAreaStyle = styled.div<ActionAreaStyleProps>`
+export const ProgressAreaStyle = styled.div<ProgressAreaStyleProps>`
   position: absolute;
   width: 464px;
   height: 56px;
-  left: 29px;
-  bottom: 28px;
+  left: 0;
+  bottom: 0;
 
   ${({ asContainer }) =>
     asContainer &&

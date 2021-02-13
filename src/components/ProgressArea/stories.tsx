@@ -1,12 +1,12 @@
 import { Story, Meta } from '@storybook/react'
-import ActionArea, { ActionAreaProps } from '.'
+import ProgressArea, { ProgressAreaProps } from '.'
 
 export default {
-  title: 'Action Area',
-  component: ActionArea,
+  title: 'Progress Area',
+  component: ProgressArea,
 } as Meta
 
-const Template: Story = (args: ActionAreaProps) => <ActionArea {...args} />
+const Template: Story = (args: ProgressAreaProps) => <ProgressArea {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
