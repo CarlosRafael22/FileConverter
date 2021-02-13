@@ -77,11 +77,11 @@ const Uploader = () => {
     state.isConvertingFile ||
     state.convertedSuccessfully
   const showChooseButtons = state.isChoosingFormat
-  const showDowloadButton = state.allowDownloadRequest
+  const showDownloadButton = state.allowDownloadRequest
 
   console.log('STATE: ', state)
   return (
-    <ConverterContext.Provider>
+    <ConverterContext.Provider value={state}>
       <BackgroundStyle>
         <DropArea onClick={uploadFile}>
           <ContentArea />
@@ -94,7 +94,7 @@ const Uploader = () => {
               onButtonPress={chooseFileFormatToConvert}
             />
           )}
-          {showDowloadButton && (
+          {showDownloadButton && (
             <Button text="Download" fullWidth onPress={downloadFile} />
           )}
         </ActionArea>
