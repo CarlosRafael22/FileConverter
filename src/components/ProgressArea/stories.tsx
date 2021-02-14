@@ -17,6 +17,7 @@ Default.args = {
 export const WithInfoText = Template.bind({})
 WithInfoText.args = {
   asContainer: true,
+  progress: 0,
   infoText: 'Uploading...',
 }
 
@@ -28,5 +29,6 @@ HasFinishedProgress.args = {
 export const WithProgress = Template.bind({})
 WithProgress.args = {
   asContainer: true,
+  infoText: 'Uploading...',
   progress: 10,
 }
