@@ -41,7 +41,7 @@ const ProgressArea = ({
         <InfoText hasFinishedProgress={hasFinishedProgress}>{text}</InfoText>
       )}
       {hasStartedProgress && !hasFinishedProgress && (
-        <ProgressBar progress={progress} />
+        <ProgressBar progress={progress} data-testid="progressBar" />
       )}
     </ProgressAreaStyle>
   )
