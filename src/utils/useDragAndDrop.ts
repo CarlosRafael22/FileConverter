@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-const useDragAndDrop = (dropHandler: Function) => {
+type dropHandlerType = (files: FileList) => void
+
+const useDragAndDrop = (dropHandler: dropHandlerType) => {
   const dropAreaRef = useRef<HTMLDivElement | null>(null)
   const [isDraggingFile, setIsDraggingFile] = useState(false)
   // let dragCounter: number
