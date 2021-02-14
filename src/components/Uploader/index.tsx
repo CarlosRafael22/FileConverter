@@ -6,9 +6,12 @@ import ProgressArea from '../ProgressArea'
 import ButtonGroup from '../ButtonGroup'
 import Button from '../Button'
 import reducer, { initialState } from '../../reducer'
+import useDragAndDrop from '../../utils/useDragAndDrop'
+import { uploadFiles } from '../../utils/filesHandler'
 
 const Uploader = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [dropAreaRef, isDraggingFile] = useDragAndDrop(uploadFiles)
 
   useEffect(() => {
     if (state.isUploading) {
@@ -80,10 +83,11 @@ const Uploader = () => {
   const showDownloadButton = state.allowDownloadRequest
 
   console.log('STATE: ', state)
+  console.log('O useDragAndDrop: ', dropAreaRef, isDraggingFile)
   return (
     <ConverterContext.Provider value={state}>
       <BackgroundStyle>
-        <DropArea>
+        <DropArea ref={dropAreaRef}>
           <ContentArea />
         </DropArea>
         <ActionArea>
