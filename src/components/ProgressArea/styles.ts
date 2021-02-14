@@ -53,9 +53,11 @@ export const InfoText = styled.p<InfoTextProps>`
   color: #334e6c;
 `
 
-export const ProgressBar = styled.div`
+type ProgressBarProps = Pick<ProgressAreaProps, 'progress'>
+
+export const ProgressBar = styled.div<ProgressBarProps>`
   position: absolute;
-  width: 448px;
+  width: ${({ progress }) => css`calc(448px * ${progress * 0.01})`};
   height: 2px;
   left: 6px;
   top: 42px;

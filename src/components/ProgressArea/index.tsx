@@ -3,17 +3,17 @@ import ButtonGroup from '../ButtonGroup'
 
 export type ProgressAreaProps = {
   asContainer: boolean
-  hasStartedProgress: boolean
-  hasFinishedProgress: boolean
+  progress: number
   infoText?: string
 }
 
 const ProgressArea = ({
   asContainer,
-  hasFinishedProgress = false,
-  hasStartedProgress = true,
+  progress,
   infoText,
 }: ProgressAreaProps) => {
+  const hasStartedProgress = progress >= 0
+  const hasFinishedProgress = progress === 100
   const text = (hasFinishedProgress && 'Successful') || infoText
 
   const showProgress = () => {
@@ -37,12 +37,12 @@ const ProgressArea = ({
       asContainer={asContainer}
       hasFinishedProgress={hasFinishedProgress}
     >
-      {/*{!showButtons && showProgress()}
-      {showButtons && showFileFormatButtons()}*/}
       {text && (
         <InfoText hasFinishedProgress={hasFinishedProgress}>{text}</InfoText>
       )}
-      {hasStartedProgress && !hasFinishedProgress && <ProgressBar />}
+      {hasStartedProgress && !hasFinishedProgress && (
+        <ProgressBar progress={progress} />
+      )}
     </ProgressAreaStyle>
   )
 }

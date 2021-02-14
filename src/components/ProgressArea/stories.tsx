@@ -11,7 +11,7 @@ const Template: Story = (args: ProgressAreaProps) => <ProgressArea {...args} />
 export const Default = Template.bind({})
 Default.args = {
   asContainer: true,
-  hasStartedProgress: false,
+  progress: 0,
 }
 
 export const WithInfoText = Template.bind({})
@@ -22,5 +22,11 @@ WithInfoText.args = {
 
 export const HasFinishedProgress = Template.bind({})
 HasFinishedProgress.args = {
-  hasFinishedProgress: true,
+  progress: 100,
+}
+
+export const WithProgress = Template.bind({})
+WithProgress.args = {
+  asContainer: true,
+  progress: 10,
 }
