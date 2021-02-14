@@ -17,17 +17,27 @@ const reducer = (state: typeof initialState = initialState, action: Object) => {
     case actions.UPLOAD_FILE:
       return { ...state, isUploading: true }
     case actions.HAS_UPLOADED_FILE:
-      return { ...state, isUploading: false, uploadedSuccessfully: true }
+      return {
+        ...state,
+        isUploading: false,
+        uploadedSuccessfully: true,
+        progress: 0,
+      }
     case actions.CHOOSE_FORMAT:
       return { ...state, uploadedSuccessfully: false, isChoosingFormat: true }
     case actions.CONVERT_FILE:
-      return { ...state, isChoosingFormat: false, isConvertingFile: true }
+      return {
+        ...state,
+        isChoosingFormat: false,
+        isConvertingFile: true,
+      }
     case actions.HAS_CONVERTED_FILE:
       return {
         ...state,
         isChoosingFormat: false,
         isConvertingFile: false,
         convertedSuccessfully: true,
+        progress: 0,
       }
     case actions.ALLOW_DOWNLOAD_REQUEST:
       return {
