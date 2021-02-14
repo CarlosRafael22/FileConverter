@@ -3,40 +3,19 @@ import axios from 'axios'
 import ConverterContext from '../../context'
 import { ContentAreaStyle, ArtWork, TitleStyle, SupportText } from './styles'
 import retrieveCurrentStatus from '../../utils/status'
+import { uploadFiles, INPUTNAME } from '../../utils/filesHandler'
 
 const ContentArea = () => {
   const state = useContext(ConverterContext)
   const fileRef = useRef<HTMLInputElement | null>(null)
   const formRef = useRef<HTMLFormElement | null>(null)
 
-  const sendData = async (formData) => {
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' },
-      onUploadProgress: (event) => {
-        console.log(
-          `Current progress:`,
-          Math.round((event.loaded * 100) / event.total)
-        )
-      },
-    }
-
-    const response = await axios.post('/api/server', formData, config)
-
-    console.log('response', response.data)
-  }
-
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) {
       return
     }
 
-    const formData = new FormData()
-
-    Array.from(event.target.files).forEach((file) => {
-      formData.append(event.target.name, file)
-    })
-
-    sendData(formData)
+    uploadFiles(event.target.files)
 
     // formRef.current?.reset()
   }
@@ -81,7 +60,7 @@ const ContentArea = () => {
           </SupportText>
         )}
         <input
-          name="file"
+          name={INPUTNAME}
           onChange={onChangeHandler}
           ref={fileRef}
           type="file"
