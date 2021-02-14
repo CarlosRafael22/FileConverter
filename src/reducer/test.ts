@@ -21,11 +21,7 @@ describe('Testing reducer cases', () => {
   })
 
   it('should return correct state for HAS_UPLOADED_FILE case', () => {
-    // We put progress as 100 to test whether this case resets the progress when the uploading has finished
-    state = reducer(
-      { ...state, progress: 100 },
-      { type: actions.HAS_UPLOADED_FILE }
-    )
+    state = reducer(state, { type: actions.HAS_UPLOADED_FILE })
     expect(state).toEqual({
       isUploading: false,
       uploadedSuccessfully: true,
@@ -64,11 +60,7 @@ describe('Testing reducer cases', () => {
   })
 
   it('should return correct state for HAS_CONVERTED_FILE case', () => {
-    // We put progress as 100 to test whether this case resets the progress when the conversion has finished
-    state = reducer(
-      { ...state, progress: 100 },
-      { type: actions.HAS_CONVERTED_FILE }
-    )
+    state = reducer(state, { type: actions.HAS_CONVERTED_FILE })
     expect(state).toEqual({
       isUploading: false,
       uploadedSuccessfully: false,
