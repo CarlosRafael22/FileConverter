@@ -27,10 +27,6 @@ const ProgressArea = ({
     )
   }
 
-  const showFileFormatButtons = () => (
-    <ButtonGroup options={['STEP', 'STL', 'IGES']} />
-  )
-
   console.log('NO ACTION AREA: ', hasFinishedProgress, hasStartedProgress)
   return (
     <ProgressAreaStyle

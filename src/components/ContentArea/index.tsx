@@ -39,11 +39,7 @@ const ContentArea = () => {
   const supportText = state.isChoosingFormat
     ? 'Convert to'
     : 'Supports: .STEP, .STL, .IGES'
-  console.log(
-    'STATE NO CONTENTAREA: ',
-    shouldShowProgress,
-    state.allowDownloadRequest
-  )
+
   return (
     <ContentAreaStyle>
       <form>
