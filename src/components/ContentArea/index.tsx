@@ -4,18 +4,29 @@ import ConverterContext from '../../context'
 import { ContentAreaStyle, ArtWork, TitleStyle, SupportText } from './styles'
 import retrieveCurrentStatus from '../../utils/status'
 import { uploadFiles, INPUTNAME } from '../../utils/filesHandler'
+import * as actions from '../../reducer/creators'
 
 const ContentArea = () => {
-  const state = useContext(ConverterContext)
+  const { state, dispatch } = useContext(ConverterContext)
   const fileRef = useRef<HTMLInputElement | null>(null)
   const formRef = useRef<HTMLFormElement | null>(null)
+
+  const uploadFilesAndShowProgress = (files: FileList) => {
+    dispatch(actions.uploadFile())
+    console.log('VAI CHAMAR O uploadFilesAndShowProgress')
+    const updateProgress = (progress: number) => {
+      console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
+      dispatch(actions.updateProgress(progress))
+    }
+    uploadFiles(files, updateProgress)
+  }
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) {
       return
     }
 
-    uploadFiles(event.target.files)
+    uploadFilesAndShowProgress(event.target.files)
 
     // formRef.current?.reset()
   }
