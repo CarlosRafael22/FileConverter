@@ -32,6 +32,7 @@ const Uploader = () => {
       dispatch(actions.hasUploadedFile())
 
       setTimeout(() => {
+        dispatch(actions.updateProgress(0))
         dispatch(actions.chooseFormat())
       }, 2000)
     }
@@ -47,12 +48,27 @@ const Uploader = () => {
     //   }, 4000)
     // }
 
-    // if (state.isConvertingFile) {
-    //   console.log('ta converting')
-    //   const secondAction = setTimeout(() => {
-    //     dispatch({ type: 'has_converted_file' })
-    //   }, 2000)
-    // }
+    if (state.isConvertingFile && state.progress === 0) {
+      console.log('ta converting')
+      setTimeout(() => {
+        dispatch(actions.updateProgress(17))
+      }, 1000)
+      setTimeout(() => {
+        dispatch(actions.updateProgress(63))
+      }, 2000)
+      setTimeout(() => {
+        dispatch(actions.updateProgress(100))
+      }, 3000)
+    }
+
+    if (state.isConvertingFile && state.progress === 100) {
+      dispatch(actions.hasConvertedFile())
+
+      setTimeout(() => {
+        dispatch(actions.updateProgress(0))
+        dispatch(actions.allowDownloadRequest())
+      }, 2000)
+    }
 
     // if (state.convertedSuccessfully) {
     //   console.log('allow download')
