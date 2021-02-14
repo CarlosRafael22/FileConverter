@@ -8,48 +8,63 @@ import Button from '../Button'
 import reducer, { initialState } from '../../reducer'
 import useDragAndDrop from '../../utils/useDragAndDrop'
 import { uploadFiles } from '../../utils/filesHandler'
+import * as actions from '../../reducer/creators'
 
 const Uploader = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [dropAreaRef, isDraggingFile] = useDragAndDrop(uploadFiles)
+
+  const uploadFilesAndShowProgress = (files: FileList) => {
+    dispatch(actions.uploadFile())
+    console.log('VAI CHAMAR O uploadFilesAndShowProgress')
+    const updateProgress = (progress: number) => {
+      console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
+      dispatch(actions.updateProgress(progress))
+    }
+    uploadFiles(files, updateProgress)
+  }
+
+  const [dropAreaRef, isDraggingFile] = useDragAndDrop(
+    uploadFilesAndShowProgress
+  )
 
   useEffect(() => {
-    if (state.isUploading) {
-      console.log('TA UPLOADING')
-      clearInterval(firstAction)
-      const firstAction = setTimeout(() => {
-        dispatch({ type: 'has_uploaded_file' })
-      }, 2000)
+    if (state.isUploading && state.progress === 100) {
+      dispatch(actions.hasUploadedFile())
 
-      const secondAction = setTimeout(() => {
-        dispatch({ type: 'choose_format' })
-      }, 4000)
-    }
-
-    if (state.isConvertingFile) {
-      console.log('ta converting')
-      const secondAction = setTimeout(() => {
-        dispatch({ type: 'has_converted_file' })
+      setTimeout(() => {
+        dispatch(actions.chooseFormat())
       }, 2000)
     }
+    // if (state.isUploading) {
+    //   console.log('TA UPLOADING')
+    //   clearInterval(firstAction)
+    //   const firstAction = setTimeout(() => {
+    //     dispatch({ type: 'has_uploaded_file' })
+    //   }, 2000)
 
-    if (state.convertedSuccessfully) {
-      console.log('allow download')
-      const secondAction = setTimeout(() => {
-        dispatch({ type: 'allow_download_request' })
-      }, 2000)
-    }
+    //   const secondAction = setTimeout(() => {
+    //     dispatch({ type: 'choose_format' })
+    //   }, 4000)
+    // }
+
+    // if (state.isConvertingFile) {
+    //   console.log('ta converting')
+    //   const secondAction = setTimeout(() => {
+    //     dispatch({ type: 'has_converted_file' })
+    //   }, 2000)
+    // }
+
+    // if (state.convertedSuccessfully) {
+    //   console.log('allow download')
+    //   const secondAction = setTimeout(() => {
+    //     dispatch({ type: 'allow_download_request' })
+    //   }, 2000)
+    // }
   })
-
-  const uploadFile = () => {
-    console.log('STATE 1: ', state)
-    dispatch({ type: 'upload_file' })
-    console.log('STATE 2: ', state)
-  }
 
   const chooseFileFormatToConvert = () => {
     console.log('ESCOLHEU')
-    dispatch({ type: 'convert_file' })
+    dispatch(actions.convertFile())
   }
 
   const downloadFile = () => console.log('VAI BAIXAAAAR')
@@ -69,7 +84,7 @@ const Uploader = () => {
         asContainer={true}
         hasFinishedProgress={finishedProgress}
         infoText={getInfoText()}
-        showButtons={false}
+        progress={state.progress}
       />
     )
   }
@@ -82,10 +97,10 @@ const Uploader = () => {
   const showChooseButtons = state.isChoosingFormat
   const showDownloadButton = state.allowDownloadRequest
 
-  console.log('STATE: ', state)
-  console.log('O useDragAndDrop: ', dropAreaRef, isDraggingFile)
+  // console.log('STATE: ', state)
+  // console.log('O useDragAndDrop: ', dropAreaRef, isDraggingFile)
   return (
-    <ConverterContext.Provider value={state}>
+    <ConverterContext.Provider value={{ state, dispatch }}>
       <BackgroundStyle>
         <DropArea ref={dropAreaRef}>
           <ContentArea />
