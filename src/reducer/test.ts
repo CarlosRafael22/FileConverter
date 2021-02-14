@@ -15,6 +15,7 @@ describe('Testing reducer cases', () => {
       isConvertingFile: false,
       convertedSuccessfully: false,
       allowDownloadRequest: false,
+      progress: 0,
     })
   })
 
@@ -27,6 +28,7 @@ describe('Testing reducer cases', () => {
       isConvertingFile: false,
       convertedSuccessfully: false,
       allowDownloadRequest: false,
+      progress: 0,
     })
   })
 
@@ -39,6 +41,7 @@ describe('Testing reducer cases', () => {
       isConvertingFile: false,
       convertedSuccessfully: false,
       allowDownloadRequest: false,
+      progress: 0,
     })
   })
 
@@ -51,6 +54,7 @@ describe('Testing reducer cases', () => {
       isConvertingFile: true,
       convertedSuccessfully: false,
       allowDownloadRequest: false,
+      progress: 0,
     })
   })
 
@@ -63,6 +67,7 @@ describe('Testing reducer cases', () => {
       isConvertingFile: false,
       convertedSuccessfully: true,
       allowDownloadRequest: false,
+      progress: 0,
     })
   })
 
@@ -77,6 +82,20 @@ describe('Testing reducer cases', () => {
       isConvertingFile: false,
       convertedSuccessfully: false,
       allowDownloadRequest: true,
+      progress: 0,
+    })
+  })
+
+  it('should return correct state for UPDATE_PROGRESS case', () => {
+    state = reducer(state, { type: actions.UPDATE_PROGRESS, payload: 10 })
+    expect(state).toEqual({
+      isUploading: false,
+      uploadedSuccessfully: false,
+      isChoosingFormat: false,
+      isConvertingFile: false,
+      convertedSuccessfully: false,
+      allowDownloadRequest: true,
+      progress: 10,
     })
   })
 })

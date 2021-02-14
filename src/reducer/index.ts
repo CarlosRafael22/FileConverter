@@ -8,6 +8,7 @@ export const initialState = {
   isConvertingFile: false,
   convertedSuccessfully: false,
   allowDownloadRequest: false,
+  progress: 0,
 }
 
 const reducer = (state: typeof initialState = initialState, action: Object) => {
@@ -33,6 +34,11 @@ const reducer = (state: typeof initialState = initialState, action: Object) => {
         ...state,
         convertedSuccessfully: false,
         allowDownloadRequest: true,
+      }
+    case actions.UPDATE_PROGRESS:
+      return {
+        ...state,
+        progress: payload,
       }
     default:
       return state
