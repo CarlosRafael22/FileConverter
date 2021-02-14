@@ -1,5 +1,6 @@
 import reducer, { initialState } from '.'
 import * as actions from './actions'
+import * as creators from './creators'
 
 describe('Testing reducer cases', () => {
   // state to be passed to each case then we the state change as in the real user interaction flow
@@ -96,6 +97,45 @@ describe('Testing reducer cases', () => {
       convertedSuccessfully: false,
       allowDownloadRequest: true,
       progress: 10,
+    })
+  })
+})
+
+describe('Testing actions creators returns', () => {
+  it('should return correct action for uploadFile', () => {
+    expect(creators.uploadFile()).toEqual({ type: actions.UPLOAD_FILE })
+  })
+
+  it('should return correct action for hasUploadedFile', () => {
+    expect(creators.hasUploadedFile()).toEqual({
+      type: actions.HAS_UPLOADED_FILE,
+    })
+  })
+
+  it('should return correct action for chooseFormat', () => {
+    expect(creators.chooseFormat()).toEqual({ type: actions.CHOOSE_FORMAT })
+  })
+
+  it('should return correct action for convertFile', () => {
+    expect(creators.convertFile()).toEqual({ type: actions.CONVERT_FILE })
+  })
+
+  it('should return correct action for hasConvertedFile', () => {
+    expect(creators.hasConvertedFile()).toEqual({
+      type: actions.HAS_CONVERTED_FILE,
+    })
+  })
+
+  it('should return correct action for allowDownloadRequest', () => {
+    expect(creators.allowDownloadRequest()).toEqual({
+      type: actions.ALLOW_DOWNLOAD_REQUEST,
+    })
+  })
+
+  it('should return correct action for updateProgress', () => {
+    expect(creators.updateProgress(10)).toEqual({
+      type: actions.UPDATE_PROGRESS,
+      payload: 10,
     })
   })
 })
