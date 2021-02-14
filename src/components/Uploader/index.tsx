@@ -83,7 +83,7 @@ const Uploader = () => {
   return (
     <ConverterContext.Provider value={state}>
       <BackgroundStyle>
-        <DropArea onClick={uploadFile}>
+        <DropArea>
           <ContentArea />
         </DropArea>
         <ActionArea>
