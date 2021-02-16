@@ -1,4 +1,5 @@
 import axios from 'axios'
+import io from 'socket.io-client'
 
 export const INPUTNAME = 'file'
 
@@ -23,12 +24,73 @@ const sendData = async (
     onUploadProgress: (event) => {
       const currentProgress = Math.round((event.loaded * 100) / event.total)
       console.log(`Current progress:`, currentProgress)
-      onProgressHandler(currentProgress)
+      // onProgressHandler(currentProgress)
     },
   }
 
+  const socket = io()
+  let socketId
+  console.log('SOCKEETTT ', socket)
+  // console.log('filename: ', formData.file.name)
+  console.log('formData: ', formData.get('file'))
+  // console.log('files: ', formData.files)
+  const filename = formData.get(INPUTNAME).name
+  const fileChannel = `${filename}-${Date.now()}`
+
+  socket.on('connect', () => {
+    console.log('connect')
+    socket.emit('hello')
+    // socket.emit('join', { name: fileChannel })
+  })
+
+  socket.on('id', function (data) {
+    socketId = data
+    console.log('PEGOU O ID: ', socketId)
+  })
+
+  socket.on('progress', (data) => console.log('PROGRESSO DO SOCKET: ', data))
+  socket.on('updateProgress', (currentProgress) => {
+    console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
+    onProgressHandler(currentProgress)
+  })
+
+  socket.on('hello', (data) => {
+    console.log('hello', data)
+  })
+
+  socket.on('disconnect', () => {
+    console.log('disconnect')
+  })
+
   const response = await axios.post('/api/server', formData, config)
+  // const response = await axios.post('/api/upload', formData, config)
   console.log('response', response.data)
+}
+
+export const convertFiles = async (
+  format: string,
+  onProgressHandler: onProgressHandlerType
+) => {
+  const socket = io()
+  console.log('VAI CONVERTER')
+  socket.on('connect', () => {
+    console.log('connect to convert')
+    socket.emit('convert')
+    // socket.emit('join', { name: fileChannel })
+  })
+  socket.on('updateProgress', (currentProgress) => {
+    console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
+    onProgressHandler(currentProgress)
+  })
+  // socket.on('convert', (currentProgress) => {
+  //   console.log('UPDATE PROGRESSO DO CONVERT: ', currentProgress)
+  //   onProgressHandler(currentProgress)
+  // })
+  try {
+    const response = await axios.get('/api/server')
+  } catch (error) {
+    console.log('ERROR NO GET DO CONVERT: ', error)
+  }
 }
 
 export const uploadFiles = (
