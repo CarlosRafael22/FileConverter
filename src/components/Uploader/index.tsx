@@ -7,7 +7,7 @@ import ButtonGroup from '../ButtonGroup'
 import Button from '../Button'
 import reducer, { initialState } from '../../reducer'
 import useDragAndDrop from '../../utils/useDragAndDrop'
-import { uploadFiles } from '../../utils/filesHandler'
+import { uploadFiles, convertFiles } from '../../utils/filesHandler'
 import * as actions from '../../reducer/creators'
 
 const Uploader = () => {
@@ -17,7 +17,7 @@ const Uploader = () => {
     dispatch(actions.uploadFile())
     console.log('VAI CHAMAR O uploadFilesAndShowProgress')
     const updateProgress = (progress: number) => {
-      console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
+      // console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
       dispatch(actions.updateProgress(progress))
     }
     uploadFiles(files, updateProgress)
@@ -48,18 +48,18 @@ const Uploader = () => {
     //   }, 4000)
     // }
 
-    if (state.isConvertingFile && state.progress === 0) {
-      console.log('ta converting')
-      setTimeout(() => {
-        dispatch(actions.updateProgress(17))
-      }, 1000)
-      setTimeout(() => {
-        dispatch(actions.updateProgress(63))
-      }, 2000)
-      setTimeout(() => {
-        dispatch(actions.updateProgress(100))
-      }, 3000)
-    }
+    // if (state.isConvertingFile && state.progress === 0) {
+    //   console.log('ta converting')
+    //   setTimeout(() => {
+    //     dispatch(actions.updateProgress(17))
+    //   }, 1000)
+    //   setTimeout(() => {
+    //     dispatch(actions.updateProgress(63))
+    //   }, 2000)
+    //   setTimeout(() => {
+    //     dispatch(actions.updateProgress(100))
+    //   }, 3000)
+    // }
 
     if (state.isConvertingFile && state.progress === 100) {
       dispatch(actions.hasConvertedFile())
@@ -81,6 +81,11 @@ const Uploader = () => {
   const chooseFileFormatToConvert = () => {
     console.log('ESCOLHEU')
     dispatch(actions.convertFile())
+    const updateProgress = (progress: number) => {
+      // console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
+      dispatch(actions.updateProgress(progress))
+    }
+    convertFiles('asad', updateProgress)
   }
 
   const downloadFile = () => console.log('VAI BAIXAAAAR')
