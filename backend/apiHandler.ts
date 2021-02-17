@@ -6,11 +6,20 @@ import { Server } from 'socket.io'
 
 // Returns a Multer instance that provides several methods for generating
 // middleware that process files uploaded in multipart/form-data format.
-const upload = multer()
+// const upload = multer()
+// Returns middleware that processes multiple files sharing the same field name.
+const uploadMiddleware = multer().single('file')
+
+// Adds the middleware to Next-Connect
+const multerUploadMiddleware = nextConnect().use(
+  '/api/upload',
+  uploadMiddleware
+)
 
 const apiHandler = nextConnect<NextApiRequest, NextApiResponse>({
   // Handle any other HTTP method
   onError(error, req, res) {
+    console.log('NO ERROR DO SERVER: ', error.message)
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` })
@@ -20,11 +29,7 @@ const apiHandler = nextConnect<NextApiRequest, NextApiResponse>({
   },
 })
 
-// Returns middleware that processes multiple files sharing the same field name.
-const uploadMiddleware = upload.single('file')
-
-// Adds the middleware to Next-Connect
-apiHandler.use(uploadMiddleware)
+apiHandler.use('/api/upload', uploadMiddleware)
 
 apiHandler.use((req, res, next) => {
   console.log('NO MIDDLEWARE DO MEIO')
@@ -93,5 +98,6 @@ apiHandler.use((req, res, next) => {
 
   next()
 })
+// .use(multerUploadMiddleware)
 
 export default apiHandler
