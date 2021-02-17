@@ -3,8 +3,16 @@ import aws from 'aws-sdk'
 import { Server } from 'socket.io'
 import apiHandler from '../../backend/apiHandler'
 
+type MulterRequest = NextApiRequest & {
+  file: any
+}
+
+type SocketApiResponse = NextApiResponse & {
+  socket: any
+}
+
 const apiRoute = apiHandler.post(
-  (req: NextApiRequest, res: NextApiResponse) => {
+  (req: MulterRequest, res: SocketApiResponse) => {
     aws.config.update({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -20,10 +28,6 @@ const apiRoute = apiHandler.post(
     console.log('NO SERVER: ', req.file)
     console.log(req.file.buffer)
     console.log(filename)
-
-    const s3 = new aws.S3({
-      params: { Bucket: process.env.AWS_BUCKET_NAME },
-    })
 
     // console.log('VAI MANDAR OS EMIT')
     // try {
@@ -43,14 +47,14 @@ const apiRoute = apiHandler.post(
     // Use S3 ManagedUpload class as it supports multipart uploads
     var upload = new aws.S3.ManagedUpload({
       params: {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.AWS_BUCKET_NAME as string,
         Key: filename,
         Body: req.file.buffer,
       },
     })
 
     upload.on('httpUploadProgress', function (progress) {
-      var uploaded = parseInt((progress.loaded * 100) / progress.total)
+      const uploaded = Math.floor((progress.loaded * 100) / progress.total)
       console.log('PROGRESSSS: ', uploaded, filename)
       // Workaround to show 100% progress only when sending the response back
       const adjustedProgress = uploaded > 10 ? uploaded - 10 : uploaded
