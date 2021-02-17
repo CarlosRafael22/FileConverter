@@ -13,9 +13,9 @@ type SocketApiResponse = NextApiResponse & {
 const apiRoute = apiHandler.post(
   (req: MulterRequest, res: SocketApiResponse) => {
     aws.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+      accessKeyId: process.env.PROJECT_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.PROJECT_AWS_SECRET_ACCESS_KEY,
+      region: process.env.PROJECT_AWS_REGION,
       signatureVersion: 'v4',
     })
 
@@ -46,7 +46,7 @@ const apiRoute = apiHandler.post(
     // Use S3 ManagedUpload class as it supports multipart uploads
     var upload = new aws.S3.ManagedUpload({
       params: {
-        Bucket: process.env.AWS_BUCKET_NAME as string,
+        Bucket: process.env.PROJECT_AWS_BUCKET_NAME as string,
         Key: filename,
         Body: req.file.buffer,
       },
