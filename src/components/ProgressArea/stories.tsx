@@ -6,7 +6,7 @@ export default {
   component: ProgressArea,
 } as Meta
 
-const Template: Story = (args: ProgressAreaProps) => <ProgressArea {...args} />
+const Template: Story<ProgressAreaProps> = (args: ProgressAreaProps) => <ProgressArea {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

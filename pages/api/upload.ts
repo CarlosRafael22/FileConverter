@@ -52,7 +52,7 @@ const apiRoute = apiHandler.post(
       },
     })
 
-    upload.on('httpUploadProgress', function (progress) {
+    upload.on('httpUploadProgress', function (progress: any) {
       const uploaded = Math.floor((progress.loaded * 100) / progress.total)
       console.log('PROGRESSSS: ', uploaded, filename)
       // Workaround to show 100% progress only when sending the response back
@@ -63,13 +63,13 @@ const apiRoute = apiHandler.post(
     var promise = upload.promise()
 
     promise.then(
-      function (data) {
+      function (data: any) {
         console.log('Successfully uploaded photo.')
         console.log(data)
         io.sockets.emit('updateProgress', 100)
         res.status(200).send(data)
       },
-      function (error) {
+      function (error: any) {
         console.log(error)
         res.status(500).send(error)
       }
