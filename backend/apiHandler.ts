@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import nextConnect from 'next-connect'
 import multer from 'multer'
-import aws from 'aws-sdk'
 import { Server } from 'socket.io'
 
 // Returns a Multer instance that provides several methods for generating
@@ -11,15 +10,16 @@ import { Server } from 'socket.io'
 const uploadMiddleware = multer().single('file')
 
 // Adds the middleware to Next-Connect
-const multerUploadMiddleware = nextConnect().use(
-  '/api/upload',
-  uploadMiddleware
-)
+// const multerUploadMiddleware = nextConnect().use(
+//   '/api/upload',
+//   uploadMiddleware
+// )
 
 const apiHandler = nextConnect<NextApiRequest, NextApiResponse>({
   // Handle any other HTTP method
   onError(error, req, res) {
     console.log('NO ERROR DO SERVER: ', error.message)
+    console.log('REQUEST: ', req)
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` })
@@ -36,11 +36,6 @@ apiHandler.use((req, res, next) => {
 
   // make it available to httpUploadProgress
   let io
-  let progressChannelName
-  let sessionSocket
-  let sockets = {}
-
-  // console.log(' RES NO SERVER: ', res, res.socket)
 
   if (!res.socket.server.io) {
     console.log('*First use, starting socket.io')
@@ -52,7 +47,7 @@ apiHandler.use((req, res, next) => {
       console.log('DEU CONNECTION')
       // socket.join(filename)
 
-      socket.on('hello', (msg) => {
+      socket.on('hello', (msg: string) => {
         console.log('MESSAGE: ', msg)
         socket.emit('hello', 'bora ver')
       })

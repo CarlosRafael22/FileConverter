@@ -14,10 +14,6 @@ const apiRoute = apiHandler.post(
 
     // make it available to httpUploadProgress
     let io = res.socket.server.io
-    let progressChannelName
-    let sessionSocket
-    let sockets = {}
-
     const originalName = req.file.originalname
     const filename = `${originalName}-${Date.now()}`
 

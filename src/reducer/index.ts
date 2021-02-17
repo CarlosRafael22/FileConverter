@@ -1,4 +1,3 @@
-import { useReducer } from 'React'
 import * as actions from './actions'
 
 export const initialState = {
@@ -11,7 +10,14 @@ export const initialState = {
   progress: 0,
 }
 
-const reducer = (state: typeof initialState = initialState, action: Object) => {
+type State = typeof initialState
+
+type Action = {
+  type: string
+  payload?: number
+}
+
+const reducer = (state: State = initialState, action: Action): State => {
   const { type, payload } = action
   switch (type) {
     case actions.UPLOAD_FILE:
@@ -50,7 +56,7 @@ const reducer = (state: typeof initialState = initialState, action: Object) => {
     case actions.UPDATE_PROGRESS:
       return {
         ...state,
-        progress: payload,
+        progress: payload as number,
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import io from 'socket.io-client'
+import * as io from 'socket.io-client'
 
 export const INPUTNAME = 'file'
 
@@ -21,7 +21,7 @@ const sendData = async (
 ) => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' },
-    onUploadProgress: (event) => {
+    onUploadProgress: (event: any) => {
       const currentProgress = Math.round((event.loaded * 100) / event.total)
       console.log(`Current progress:`, currentProgress)
       // onProgressHandler(currentProgress)
@@ -29,13 +29,13 @@ const sendData = async (
   }
 
   const socket = io()
-  let socketId
+  // let socketId
   console.log('SOCKEETTT ', socket)
   // console.log('filename: ', formData.file.name)
   console.log('formData: ', formData.get('file'))
   // console.log('files: ', formData.files)
-  const filename = formData.get(INPUTNAME).name
-  const fileChannel = `${filename}-${Date.now()}`
+  // const filename = formData.get(INPUTNAME).name
+  // const fileChannel = `${filename}-${Date.now()}`
 
   socket.on('connect', () => {
     console.log('connect')
@@ -43,19 +43,12 @@ const sendData = async (
     // socket.emit('join', { name: fileChannel })
   })
 
-  socket.on('id', function (data) {
-    socketId = data
-    console.log('PEGOU O ID: ', socketId)
-  })
-
-  socket.on('progress', (data) => console.log('PROGRESSO DO SOCKET: ', data))
-  socket.on('updateProgress', (currentProgress) => {
+  socket.on('progress', (data: number) =>
+    console.log('PROGRESSO DO SOCKET: ', data)
+  )
+  socket.on('updateProgress', (currentProgress: number) => {
     console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
     onProgressHandler(currentProgress)
-  })
-
-  socket.on('hello', (data) => {
-    console.log('hello', data)
   })
 
   socket.on('disconnect', () => {
@@ -78,7 +71,7 @@ export const convertFiles = async (
     socket.emit('convert')
     // socket.emit('join', { name: fileChannel })
   })
-  socket.on('updateProgress', (currentProgress) => {
+  socket.on('updateProgress', (currentProgress: number) => {
     console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
     onProgressHandler(currentProgress)
   })
@@ -86,8 +79,9 @@ export const convertFiles = async (
   //   console.log('UPDATE PROGRESSO DO CONVERT: ', currentProgress)
   //   onProgressHandler(currentProgress)
   // })
+  console.log(format)
   try {
-    const response = await axios.get('/api/convert')
+    await axios.get('/api/convert')
   } catch (error) {
     console.log('ERROR NO GET DO CONVERT: ', error)
   }
