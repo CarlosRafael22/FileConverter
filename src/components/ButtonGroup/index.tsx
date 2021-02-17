@@ -3,7 +3,7 @@ import { ButtonGroupStyle } from './styles'
 
 export type ButtonGroupProps = {
   options: Array<string>
-  onButtonPress: Function
+  onButtonPress: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 const ButtonGroup = ({ options, onButtonPress }: ButtonGroupProps) => {

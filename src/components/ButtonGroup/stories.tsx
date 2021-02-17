@@ -6,7 +6,9 @@ export default {
   component: ButtonGroup,
 } as Meta
 
-const Template: Story = (args: ButtonGroupProps) => <ButtonGroup {...args} />
+const Template: Story<ButtonGroupProps> = (args: ButtonGroupProps) => (
+  <ButtonGroup {...args} />
+)
 
 export const Default = Template.bind({})
 Default.args = {

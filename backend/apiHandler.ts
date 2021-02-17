@@ -55,7 +55,7 @@ apiHandler.use((req, res, next) => {
       console.log('VAI MANDAR OS EMIT CARAAAAI')
       socket.emit('progress', 20)
 
-      socket.on('convert', (data: any) => {
+      socket.on('convert', () => {
         console.log('RECEIVED CONVERT REQUEST')
         // socket.emit('updateProgress', 10)
         // socket.emit('convert', 100)

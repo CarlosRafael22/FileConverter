@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import aws from 'aws-sdk'
-import { Server } from 'socket.io'
 import apiHandler from '../../backend/apiHandler'
 
 type MulterRequest = NextApiRequest & {

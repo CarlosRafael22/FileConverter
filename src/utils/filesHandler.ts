@@ -5,7 +5,7 @@ export const INPUTNAME = 'file'
 
 type onProgressHandlerType = (progress: number) => void
 
-const createFormDataFromFiles = (files: Array<any>) => {
+const createFormDataFromFiles = (files: FileList) => {
   const formData = new FormData()
 
   Array.from(files).forEach((file) => {
@@ -88,7 +88,7 @@ export const convertFiles = async (
 }
 
 export const uploadFiles = (
-  files: FilesList,
+  files: FileList,
   onProgressHandler: onProgressHandlerType
 ) => {
   const formData = createFormDataFromFiles(files)

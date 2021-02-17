@@ -9,7 +9,9 @@ export type ContextType = {
 
 const ConverterContext = createContext({
   state: initialState,
-  dispatch: (action: Action) => {},
+  dispatch: (action: Action) => {
+    console.log(action)
+  },
 })
 
 export default ConverterContext
