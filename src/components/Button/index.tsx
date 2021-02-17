@@ -2,7 +2,7 @@ import { ButtonStyle, ButtonText } from './styles'
 
 export type ButtonProps = {
   text: string
-  fullWidth: boolean
+  fullWidth?: boolean
   onPress: Function
 }
 

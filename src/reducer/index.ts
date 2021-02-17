@@ -10,14 +10,19 @@ export const initialState = {
   progress: 0,
 }
 
-type State = typeof initialState
+export type ReducerState = typeof initialState
 
-type Action = {
+export type Action = {
   type: string
   payload?: number
 }
 
-const reducer = (state: State = initialState, action: Action): State => {
+export type DispatchType = React.Dispatch<Action>
+
+const reducer = (
+  state: ReducerState = initialState,
+  action: Action
+): ReducerState => {
   const { type, payload } = action
   switch (type) {
     case actions.UPLOAD_FILE:

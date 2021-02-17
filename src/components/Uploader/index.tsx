@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react'
-import ConverterContext from '../../context'
+import ConverterContext, { ContextType } from '../../context'
 import { BackgroundStyle, DropArea, ActionArea } from './styles'
 import ContentArea from '../ContentArea'
 import ProgressArea from '../ProgressArea'
@@ -23,9 +23,10 @@ const Uploader = () => {
     uploadFiles(files, updateProgress)
   }
 
-  const [dropAreaRef, isDraggingFile] = useDragAndDrop(
-    uploadFilesAndShowProgress
-  )
+  const [dropAreaRef, isDraggingFile]: [
+    React.MutableRefObject<HTMLDivElement>,
+    boolean
+  ] = useDragAndDrop(uploadFilesAndShowProgress)
 
   useEffect(() => {
     if (state.isUploading && state.progress === 100) {
@@ -97,13 +98,9 @@ const Uploader = () => {
       return undefined
     }
 
-    const finishedProgress =
-      state.uploadedSuccessfully || state.convertedSuccessfully
-
     return (
       <ProgressArea
         asContainer={true}
-        hasFinishedProgress={finishedProgress}
         infoText={getInfoText()}
         progress={state.progress}
       />
@@ -119,9 +116,10 @@ const Uploader = () => {
   const showDownloadButton = state.allowDownloadRequest
 
   // console.log('STATE: ', state)
-  // console.log('O useDragAndDrop: ', dropAreaRef, isDraggingFile)
+  console.log('O useDragAndDrop: ', dropAreaRef, isDraggingFile)
+  const context: ContextType = { state, dispatch }
   return (
-    <ConverterContext.Provider value={{ state, dispatch }}>
+    <ConverterContext.Provider value={context}>
       <BackgroundStyle>
         <DropArea ref={dropAreaRef}>
           <ContentArea />

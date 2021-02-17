@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react'
-import axios from 'axios'
 import ConverterContext from '../../context'
+// import { DispatchType, ReducerState } from '../../reducer'
 import { ContentAreaStyle, ArtWork, TitleStyle, SupportText } from './styles'
 import retrieveCurrentStatus from '../../utils/status'
 import { uploadFiles, INPUTNAME } from '../../utils/filesHandler'
@@ -28,7 +28,7 @@ const ContentArea = () => {
 
     uploadFilesAndShowProgress(event.target.files)
 
-    // formRef.current?.reset()
+    formRef.current?.reset()
   }
 
   const onClickHandler = () => {
@@ -36,11 +36,9 @@ const ContentArea = () => {
     fileRef.current?.click()
   }
 
-  const [
-    shouldShowProgress,
-    shouldShowFileName,
-    shouldShowSupportText,
-  ] = retrieveCurrentStatus(state)
+  const [, shouldShowFileName, shouldShowSupportText] = retrieveCurrentStatus(
+    state
+  )
   const fileName = 'Red_drone.shapr'
 
   const titleText = shouldShowFileName

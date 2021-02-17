@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components'
 import { ProgressAreaProps } from '.'
 
-type ProgressAreaStyleProps = Pick<
-  ProgressAreaProps,
-  'asContainer' | 'hasFinishedProgress'
->
+type ProgressAreaStyleProps = Pick<ProgressAreaProps, 'asContainer'> & {
+  hasFinishedProgress: boolean
+}
 
-type InfoTextProps = Pick<ProgressAreaProps, 'hasFinishedProgress'>
+type InfoTextProps = {
+  hasFinishedProgress: boolean
+}
 
 export const ProgressAreaStyle = styled.div<ProgressAreaStyleProps>`
   position: absolute;

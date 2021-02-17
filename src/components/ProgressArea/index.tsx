@@ -1,5 +1,4 @@
 import { ProgressAreaStyle, ProgressBar, InfoText } from './styles'
-import ButtonGroup from '../ButtonGroup'
 
 export type ProgressAreaProps = {
   asContainer: boolean
@@ -15,17 +14,6 @@ const ProgressArea = ({
   const hasStartedProgress = progress >= 0
   const hasFinishedProgress = progress === 100
   const text = (hasFinishedProgress && 'Successful') || infoText
-
-  const showProgress = () => {
-    return (
-      <>
-        {text && (
-          <InfoText hasFinishedProgress={hasFinishedProgress}>{text}</InfoText>
-        )}
-        {hasStartedProgress && !hasFinishedProgress && <ProgressBar />}
-      </>
-    )
-  }
 
   console.log('NO ACTION AREA: ', hasFinishedProgress, hasStartedProgress)
   return (

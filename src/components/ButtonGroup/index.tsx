@@ -1,7 +1,7 @@
 import Button from '../Button'
 import { ButtonGroupStyle } from './styles'
 
-type ButtonGroupProps = {
+export type ButtonGroupProps = {
   options: Array<string>
   onButtonPress: Function
 }

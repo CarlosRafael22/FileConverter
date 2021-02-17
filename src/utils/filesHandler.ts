@@ -88,7 +88,7 @@ export const convertFiles = async (
 }
 
 export const uploadFiles = (
-  files: Array<any>,
+  files: FilesList,
   onProgressHandler: onProgressHandlerType
 ) => {
   const formData = createFormDataFromFiles(files)

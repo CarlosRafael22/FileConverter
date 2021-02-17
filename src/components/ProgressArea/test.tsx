@@ -20,7 +20,7 @@ describe('<ProgressArea />', () => {
   it('should render infoText prop', () => {
     render(<WithInfoText {...WithInfoText.args} />)
 
-    expect(screen.getByText(WithInfoText.args.infoText)).toBeInTheDocument()
+    expect(screen.getByText(WithInfoText?.args?.infoText)).toBeInTheDocument()
   })
 
   it('should render Successful message and color when progress is 100%', () => {
@@ -35,10 +35,10 @@ describe('<ProgressArea />', () => {
   })
 
   it('should render the ProgressBar according to the progress prop', () => {
-    const { container } = render(<WithProgress {...WithProgress.args} />)
+    render(<WithProgress {...WithProgress.args} />)
 
-    const widthFactor = WithProgress.args.progress * 0.01
-    expect(screen.getByText(WithProgress.args.infoText)).toBeInTheDocument()
+    const widthFactor = WithProgress?.args?.progress * 0.01
+    expect(screen.getByText(WithProgress?.args?.infoText)).toBeInTheDocument()
     expect(screen.getByTestId('progressBar')).toHaveStyle({
       background: '#00a7ff',
       width: `calc(448px * ${widthFactor})`,
