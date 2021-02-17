@@ -62,7 +62,7 @@ const sendData = async (
     console.log('disconnect')
   })
 
-  const response = await axios.post('/api/server', formData, config)
+  const response = await axios.post('/api/upload', formData, config)
   // const response = await axios.post('/api/upload', formData, config)
   console.log('response', response.data)
 }
@@ -87,7 +87,7 @@ export const convertFiles = async (
   //   onProgressHandler(currentProgress)
   // })
   try {
-    const response = await axios.get('/api/server')
+    const response = await axios.get('/api/convert')
   } catch (error) {
     console.log('ERROR NO GET DO CONVERT: ', error)
   }
