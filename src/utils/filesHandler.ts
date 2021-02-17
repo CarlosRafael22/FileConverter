@@ -28,7 +28,7 @@ const sendData = async (
     },
   }
 
-  const socket = io()
+  const socket = io('https://file-converter.vercel.app/')
   // let socketId
   console.log('SOCKEETTT ', socket)
   // console.log('filename: ', formData.file.name)
@@ -64,7 +64,7 @@ export const convertFiles = async (
   format: string,
   onProgressHandler: onProgressHandlerType
 ) => {
-  const socket = io()
+  const socket = io('https://file-converter.vercel.app/')
   console.log('VAI CONVERTER')
   socket.on('connect', () => {
     console.log('connect to convert')
