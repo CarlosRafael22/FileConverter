@@ -3,8 +3,8 @@ import aws from 'aws-sdk'
 import { Server } from 'socket.io'
 import apiHandler from '../../backend/apiHandler'
 
-const apiRoute = apiHandler
-  .post((req: NextApiRequest, res: NextApiResponse) => {
+const apiRoute = apiHandler.post(
+  (req: NextApiRequest, res: NextApiResponse) => {
     aws.config.update({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -77,25 +77,8 @@ const apiRoute = apiHandler
     )
 
     // res.end()
-  })
-  .get((req: NextApiRequest, res: NextApiResponse) => {
-    // mock conversion sending status of the progress
-    console.log('CAIU NO GET')
-    // try {
-    //   if (!res.socket.server.io) {
-    //     console.log(res.socket.server)
-    //     console.log('*First use, starting socket.io')
-    //   } else {
-    //     console.log('socket.io already running')
-    //     io = res.socket.server.io
-    //   }
-    // } catch (error) {
-    //   console.lo('ERROR 2')
-    //   console.log(error)
-    // }
-    console.log('VAI RESPONSE')
-    res.status(200).send({ success: true })
-  })
+  }
+)
 
 export default apiRoute
 
