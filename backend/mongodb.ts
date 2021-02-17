@@ -1,14 +1,16 @@
 import { MongoClient } from 'mongodb'
 
-const { MONGODB_URI, MONGODB_DB } = process.env
+// type Variables = { MONGODB_URI: string; MONGODB_DB: string }
 
-if (!MONGODB_URI) {
+// const { MONGODB_URI, MONGODB_DB }: Variables = process.env
+
+if (!process.env.MONGODB_URI) {
   throw new Error(
     'Please define the MONGODB_URI environment variable inside .env.local'
   )
 }
 
-if (!MONGODB_DB) {
+if (!process.env.MONGODB_DB) {
   throw new Error(
     'Please define the MONGODB_DB environment variable inside .env.local'
   )
@@ -19,10 +21,11 @@ if (!MONGODB_DB) {
  * in development. This prevents connections growing exponentially
  * during API Route usage.
  */
-let cached = global.mongo
+const globalAny: any = global
+let cached = globalAny.mongo
 
 if (!cached) {
-  cached = global.mongo = { conn: null, promise: null }
+  cached = globalAny.mongo = { conn: null, promise: null }
 }
 
 export async function connectToDatabase() {
@@ -36,10 +39,13 @@ export async function connectToDatabase() {
       useUnifiedTopology: true,
     }
 
-    cached.promise = MongoClient.connect(MONGODB_URI, opts).then((client) => {
+    cached.promise = MongoClient.connect(
+      process.env.MONGODB_URI as string,
+      opts
+    ).then((client) => {
       return {
         client,
-        db: client.db(MONGODB_DB),
+        db: client.db(process.env.MONGODB_DB),
       }
     })
   }
