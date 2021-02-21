@@ -13,7 +13,6 @@ export const ArtWork = styled.div`
   position: absolute;
   left: calc(50% - 80px / 2);
   bottom: 40.33%;
-  background-color: blue;
 `
 
 export const TitleStyle = styled.h3`

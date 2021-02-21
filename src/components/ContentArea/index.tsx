@@ -1,6 +1,5 @@
 import { useContext, useRef } from 'react'
 import ConverterContext from '../../context'
-// import { DispatchType, ReducerState } from '../../reducer'
 import { ContentAreaStyle, ArtWork, TitleStyle, SupportText } from './styles'
 import retrieveCurrentStatus from '../../utils/status'
 import { uploadFiles, INPUTNAME } from '../../utils/filesHandler'
@@ -13,9 +12,7 @@ const ContentArea = () => {
 
   const uploadFilesAndShowProgress = (files: FileList) => {
     dispatch(actions.uploadFile())
-    console.log('VAI CHAMAR O uploadFilesAndShowProgress')
     const updateProgress = (progress: number) => {
-      console.log('VAI ATUALIZAR REDUCER PROGRESS: ', progress)
       dispatch(actions.updateProgress(progress))
     }
     uploadFiles(files, updateProgress)
@@ -27,18 +24,14 @@ const ContentArea = () => {
     }
 
     uploadFilesAndShowProgress(event.target.files)
-
     formRef.current?.reset()
   }
 
   const onClickHandler = () => {
-    console.log('CLICOU')
     fileRef.current?.click()
   }
 
-  const [, shouldShowFileName, shouldShowSupportText] = retrieveCurrentStatus(
-    state
-  )
+  const [, shouldShowFileName, shouldShowSupportText] = retrieveCurrentStatus(state)
   const fileName = 'Red_drone.shapr'
 
   const titleText = shouldShowFileName
@@ -51,7 +44,7 @@ const ContentArea = () => {
 
   return (
     <ContentAreaStyle>
-      <form>
+      <form ref={formRef} onClick={onClickHandler}>
         <ArtWork>
           <img src={'/shapr3d.jpg'} width={80} height={80} />
         </ArtWork>
@@ -59,7 +52,6 @@ const ContentArea = () => {
         {shouldShowSupportText && (
           <SupportText
             isChoosingFormat={state.isChoosingFormat}
-            onClick={onClickHandler}
           >
             {supportText}
           </SupportText>
