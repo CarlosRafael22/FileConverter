@@ -25,7 +25,7 @@ const apiRoute = apiHandler.post(
     var upload = new aws.S3.ManagedUpload({
       params: {
         Bucket: process.env.PROJECT_AWS_BUCKET_NAME as string,
-        Key: filename,
+        Key: filename as string,
         Body: req.file.buffer,
       },
     })

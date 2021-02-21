@@ -6,8 +6,8 @@ const uploadMiddleware = multer().single('file')
 
 const apiHandler = nextConnect<NextApiRequest, NextApiResponse>({
   // Handle any other HTTP method
-  onError(error, req, res) {
-    console.log('NO ERROR DO SERVER: ', error.message)
+  onError(error, _req, res) {
+    console.log('SERVER ERROR: ', error.message)
     res
       .status(501)
       .json({ error: `Sorry something Happened! ${error.message}` })
