@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { io } from 'socket.io-client'
+// import { io } from 'socket.io-client'
+import { database } from '../firebase'
 
 export const INPUTNAME = 'file'
 
@@ -28,34 +29,17 @@ const sendData = async (
     },
   }
 
-  const socket = io('https://file-converter.vercel.app/')
-  // let socketId
-  console.log('SOCKEETTT ', socket)
-  // console.log('filename: ', formData.file.name)
-  console.log('formData: ', formData.get('file'))
-  // console.log('files: ', formData.files)
-  // const filename = formData.get(INPUTNAME).name
-  // const fileChannel = `${filename}-${Date.now()}`
-
-  socket.on('connect', () => {
-    console.log('connect')
-    socket.emit('hello')
-    // socket.emit('join', { name: fileChannel })
-  })
-
-  socket.on('progress', (data: number) =>
-    console.log('PROGRESSO DO SOCKET: ', data)
-  )
-  socket.on('updateProgress', (currentProgress: number) => {
-    console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
-    onProgressHandler(currentProgress)
-  })
-
-  socket.on('disconnect', () => {
-    console.log('disconnect')
-  })
-
-  const response = await axios.post('/api/upload', formData, config)
+  const originalName = formData.get('file').name.split('.')[0]
+  const filename = `${originalName}-${Date.now()}`
+  const databaseRef = database.ref('/files').child(filename)
+  databaseRef.on("child_changed", function(snapshot: any) {
+    const updatedProgress = snapshot.val()
+    console.log('CHILD_CHANGED: ', updatedProgress)
+    console.log("The updated file progress is " + updatedProgress)
+    onProgressHandler(updatedProgress)
+  });
+  
+  const response = await axios.post(`/api/upload?filename=${filename}`, formData, config)
   // const response = await axios.post('/api/upload', formData, config)
   console.log('response', response.data)
 }
@@ -64,24 +48,18 @@ export const convertFiles = async (
   format: string,
   onProgressHandler: onProgressHandlerType
 ) => {
-  const socket = io('https://file-converter.vercel.app/')
-  console.log('VAI CONVERTER')
-  socket.on('connect', () => {
-    console.log('connect to convert')
-    socket.emit('convert')
-    // socket.emit('join', { name: fileChannel })
-  })
-  socket.on('updateProgress', (currentProgress: number) => {
-    console.log('UPDATE PROGRESSO DO SOCKETTTTTTTTTTTT: ', currentProgress)
-    onProgressHandler(currentProgress)
-  })
-  // socket.on('convert', (currentProgress) => {
-  //   console.log('UPDATE PROGRESSO DO CONVERT: ', currentProgress)
-  //   onProgressHandler(currentProgress)
-  // })
+  const filename = `${format}-${Date.now()}`
+  const databaseRef = database.ref('/files').child(filename)
+  databaseRef.on("child_changed", function(snapshot: any) {
+    const updatedProgress = snapshot.val()
+    console.log('CHILD_CHANGED: ', updatedProgress)
+    console.log("The updated file progress is " + updatedProgress)
+    onProgressHandler(updatedProgress)
+  });
+
   console.log(format)
   try {
-    await axios.get('/api/convert')
+    await axios.get(`/api/convert?filename=${filename}`)
   } catch (error) {
     console.log('ERROR NO GET DO CONVERT: ', error)
   }
