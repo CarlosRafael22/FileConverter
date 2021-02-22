@@ -16,8 +16,6 @@ const apiRoute = apiHandler.post(
       signatureVersion: 'v4',
     })
 
-    console.log('NO SERVER: ', req.query)
-    console.log(req.file.buffer)
     const { query: { filename } } = req
 
 
@@ -34,7 +32,6 @@ const apiRoute = apiHandler.post(
 
     upload.on('httpUploadProgress', function (progress: any) {
       const uploaded = Math.floor((progress.loaded * 100) / progress.total)
-      console.log('PROGRESSSS: ', uploaded, filename)
       // Workaround to show 100% progress only when sending the response back
       const adjustedProgress = uploaded > 10 ? uploaded - 1 : uploaded
       fileRef.set({ progress: adjustedProgress })
@@ -44,13 +41,10 @@ const apiRoute = apiHandler.post(
 
     promise.then(
       function (data: any) {
-        console.log('Successfully uploaded photo.')
-        console.log(data)
         fileRef.set({ progress: 100, location: data.Location })
         res.status(200).send(data)
       },
       function (error: any) {
-        console.log(error)
         res.status(500).send(error)
       }
     )

@@ -22,11 +22,10 @@ const sendData = async (
 ) => {
   const config = {
     headers: { 'content-type': 'multipart/form-data' },
-    onUploadProgress: (event: any) => {
-      const currentProgress = Math.round((event.loaded * 100) / event.total)
-      console.log(`Current progress:`, currentProgress)
-      // onProgressHandler(currentProgress)
-    },
+    // onUploadProgress: (event: any) => {
+    //   const currentProgress = Math.round((event.loaded * 100) / event.total)
+    //   // onProgressHandler(currentProgress)
+    // },
   }
 
   const originalName = formData.get('file').name.split('.')[0]
@@ -34,14 +33,10 @@ const sendData = async (
   const databaseRef = database.ref('/files').child(filename)
   databaseRef.on("child_changed", function(snapshot: any) {
     const updatedProgress = snapshot.val()
-    console.log('CHILD_CHANGED: ', updatedProgress)
-    console.log("The updated file progress is " + updatedProgress)
     onProgressHandler(updatedProgress)
   });
   
   const response = await axios.post(`/api/upload?filename=${filename}`, formData, config)
-  // const response = await axios.post('/api/upload', formData, config)
-  console.log('response', response.data)
 }
 
 export const convertFiles = async (
@@ -52,16 +47,13 @@ export const convertFiles = async (
   const databaseRef = database.ref('/files').child(filename)
   databaseRef.on("child_changed", function(snapshot: any) {
     const updatedProgress = snapshot.val()
-    console.log('CHILD_CHANGED: ', updatedProgress)
-    console.log("The updated file progress is " + updatedProgress)
     onProgressHandler(updatedProgress)
   });
 
-  console.log(format)
   try {
     await axios.get(`/api/convert?filename=${filename}`)
   } catch (error) {
-    console.log('ERROR NO GET DO CONVERT: ', error)
+    console.log('ERROR CONVERT: ', error)
   }
 }
 

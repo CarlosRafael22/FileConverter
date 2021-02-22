@@ -31,10 +31,8 @@ const useDragAndDrop = (
   const handleDrop = (event: DragEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    console.log('CAIU NO DROP')
     setIsDraggingFile(false)
     if (event.dataTransfer?.files && event.dataTransfer?.files.length > 0) {
-      console.log('TEM FILES: ', event.dataTransfer?.files)
       dropHandler(event.dataTransfer?.files)
       event.dataTransfer?.clearData()
       // dragCounter = 0

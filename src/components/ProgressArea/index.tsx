@@ -15,7 +15,6 @@ const ProgressArea = ({
   const hasFinishedProgress = progress === 100
   const text = (hasFinishedProgress && 'Successful') || infoText
 
-  console.log('NO ACTION AREA: ', hasFinishedProgress, hasStartedProgress)
   return (
     <ProgressAreaStyle
       asContainer={asContainer}
