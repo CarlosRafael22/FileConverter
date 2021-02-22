@@ -36,7 +36,7 @@ const sendData = async (
     onProgressHandler(updatedProgress)
   });
   
-  const response = await axios.post(`/api/upload?filename=${filename}`, formData, config)
+  await axios.post(`/api/upload?filename=${filename}`, formData, config)
 }
 
 export const convertFiles = async (

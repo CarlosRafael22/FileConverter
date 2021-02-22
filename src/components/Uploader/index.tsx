@@ -21,7 +21,7 @@ const Uploader = () => {
     uploadFiles(files, updateProgress)
   }
 
-  const [dropAreaRef, isDraggingFile]: [
+  const [dropAreaRef, ]: [
     React.RefObject<HTMLDivElement>,
     boolean
   ] = useDragAndDrop(uploadFilesAndShowProgress)
